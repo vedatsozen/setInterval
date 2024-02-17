@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SET INTERVAL PRACTICE</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+
+<body>
+    <button onclick="startInterval()">Start</button>
+    <button onclick="stopInterval()">Pause</button>
+    <button onclick="window.location.reload()">Reset</button>
+    <button onclick="captureScreen()">Capture Screen</button>
+    <input type="color" id="bordercolorinput" oninput="createNew()">
+</body>
+
+<script>
+    let height = 10;
+    let width = 10;
+    let interval;
+    let i = 0;
+
+    function createNew() {
+        let bordercolor = document.getElementById("bordercolorinput").value;
+
+        let newSquare = document.createElement("div");
+        newSquare.classList.add("newsquare");
+        newSquare.style.height = height + "px";
+        newSquare.style.width = width + "px";
+        newSquare.style.border = "2px solid " + bordercolor; // Added space after "solid"
+        document.body.appendChild(newSquare);
+
+        height += 10;
+        width += 10;
+        i += 1;
+
+    }
+
+    function startInterval() {
+        interval = setInterval(createNew, 100);
+    }
+
+    function stopInterval() {
+        clearInterval(interval);
+    }
+
+    function captureScreen() {
+       hideall()
+        html2canvas(document.body).then(function(canvas) {
+            let a = document.createElement('a');
+            a.href = canvas.toDataURL("image/png");
+            a.download = 'screenshot.png';
+            a.click();
+        });
+    }
+
+    function hideall() {
+        document.querySelectorAll('button').forEach(function (button) {
+            button.style.display = "none";
+        });
+
+        document.querySelectorAll('input').forEach(function (input) {
+            input.style.display = "none";
+        });
+    }
+
+</script>
+
+</html>
